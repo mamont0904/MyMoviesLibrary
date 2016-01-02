@@ -7,9 +7,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main extends Application {
+
+    private final String MOVIES_JSON_FILE = "movies.json";
 
     private final ObservableList<Movie> movies = FXCollections.observableArrayList();
 
@@ -19,26 +29,7 @@ public class Main extends Application {
         fxmlLoader.setLocation(getClass().getResource("MyMoviesLibrary.fxml"));
         Parent root = fxmlLoader.load();
 
-        /*
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", "foo");
-        jsonObject.put("num", new Integer(100));
-        jsonObject.put("balance", new Double(1000.21));
-        jsonObject.put("is_vip", new Boolean(true));
-
-        System.out.print(jsonObject);
-        */
-
-        // Only for test purposes
-        Movie movie = new Movie();
-        movie.setIsWatched(true);
-        movie.setCountry("США");
-        movie.setYear(0);
-        movie.setDirector("Нил Бёргер");
-        movie.setTitle("Limitless");
-        movie.setDescription("Фильм очень хороший!");
-        movies.add(movie);
-
+        loadMoviesData();
 
         ((Controller)(fxmlLoader.getController())).setMainApp(this);
 
@@ -55,5 +46,56 @@ public class Main extends Application {
 
     public ObservableList<Movie> getMovies() {
         return movies;
+    }
+
+    public void saveMoviesData() {
+        JSONArray moviesJsonArray = new JSONArray();
+
+        for (Movie movie : movies) {
+            JSONObject movieJsonObject = new JSONObject();
+            movieJsonObject.put("title", movie.getTitle());
+            movieJsonObject.put("year", movie.getYear());
+            movieJsonObject.put("country", movie.getCountry());
+            movieJsonObject.put("director", movie.getDirector());
+            movieJsonObject.put("isWatched", movie.getIsWatched());
+            movieJsonObject.put("description", movie.getDescription());
+            moviesJsonArray.add(movieJsonObject);
+
+        }
+
+        try (FileWriter file = new FileWriter(getClass().getResource(MOVIES_JSON_FILE).getFile())) {
+            file.write(moviesJsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadMoviesData() {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray a = (JSONArray) parser.parse(new FileReader(getClass().getResource(MOVIES_JSON_FILE).getFile()));
+
+            for (Object o : a)
+            {
+                JSONObject moviesJsonObject = (JSONObject) o;
+
+                Movie movie = new Movie();
+                movie.setTitle((String) moviesJsonObject.get("title"));
+                movie.setCountry((String) moviesJsonObject.get("country"));
+                movie.setDescription((String) moviesJsonObject.get("description"));
+                movie.setDirector((String) moviesJsonObject.get("director"));
+                movie.setIsWatched((Boolean) moviesJsonObject.get("isWatched"));
+                movie.setYear(((Long) moviesJsonObject.get("year")).intValue());
+                movies.add(movie);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

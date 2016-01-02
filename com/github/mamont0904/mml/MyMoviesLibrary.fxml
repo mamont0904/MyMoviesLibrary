@@ -37,6 +37,11 @@
                      </VBox.margin>
                   </Button>
                   <Button fx:id="deleteMovieButton" mnemonicParsing="false" prefWidth="80.0" text="Удалить" />
+                  <Button fx:id="saveChangesButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="142.0" text="Сохранить изменения">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
                <opaqueInsets>
                   <Insets />

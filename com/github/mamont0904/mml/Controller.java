@@ -35,6 +35,9 @@ public class Controller implements Initializable{
     @FXML
     private Button deleteMovieButton;
 
+    @FXML
+    private Button saveChangesButton;
+
     private Main main;
 
     public Controller() {
@@ -59,19 +62,6 @@ public class Controller implements Initializable{
         countryTableColumn.setCellValueFactory(cellData -> cellData.getValue().countryProperty());
         countryTableColumn.setCellFactory(ts -> new TextFieldTableCell<Movie, String>(new DefaultStringConverter()));
 
-        descriptionTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!oldValue.equals(newValue))
-                movieTableView.getSelectionModel().getSelectedItem().descriptionProperty().setValue(newValue);
-        });
-
-        addMovieButton.setOnMouseClicked(event -> {
-            main.getMovies().add(new Movie());
-        });
-
-        deleteMovieButton.setOnMouseClicked(event -> {
-            main.getMovies().remove(movieTableView.getSelectionModel().getSelectedIndex());
-        });
-
         movieTableView.setRowFactory(tv -> {
             TableRow<Movie> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -82,5 +72,25 @@ public class Controller implements Initializable{
             });
             return row;
         });
+
+        descriptionTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue))
+                movieTableView.getSelectionModel().getSelectedItem().descriptionProperty().setValue(newValue);
+        });
+
+
+        addMovieButton.setOnMouseClicked(event -> {
+            main.getMovies().add(new Movie());
+        });
+
+        deleteMovieButton.setOnMouseClicked(event -> {
+            main.getMovies().remove(movieTableView.getSelectionModel().getSelectedIndex());
+        });
+
+        saveChangesButton.setOnMouseClicked(event -> {
+            main.saveMoviesData();
+        });
+
+
     }
 }
