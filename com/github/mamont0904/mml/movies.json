@@ -1,8 +1,1 @@
-{
-	"title":"Области тьмы",
-	"year":2011,
-	"description":"Очень хороший фильм!",
-	"country":"США",
-	"director":"Нил Бёргер",
-	"isWatched":true
-}
+[{"country":"США","year":2011,"director":"Нил Бёргер","description":"Фильм очень хороший!11","isWatched":true,"title":"Limitless"},{"country":"США","year":1994,"director":"Дэвид Крейн, Марта Кауффман","description":"Очень хороший сериал!","isWatched":true,"title":"Friends"}]

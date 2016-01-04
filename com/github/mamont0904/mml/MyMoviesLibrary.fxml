@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="570.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.mamont0904.mml.Controller">
+<VBox prefHeight="570.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.mamont0904.mml.MyMoviesLibrary">
    <children>
       <TableView fx:id="movieTableView" editable="true" prefHeight="570.0" prefWidth="770.0">
          <columns>

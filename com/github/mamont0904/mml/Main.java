@@ -31,7 +31,7 @@ public class Main extends Application {
 
         loadMoviesData();
 
-        ((Controller)(fxmlLoader.getController())).setMainApp(this);
+        ((MyMoviesLibrary)(fxmlLoader.getController())).setMainApp(this);
 
         primaryStage.setTitle("MyMoviesLibrary");
         primaryStage.setScene(new Scene(root, 800, 600));
