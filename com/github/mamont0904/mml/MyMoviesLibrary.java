@@ -38,15 +38,15 @@ public class MyMoviesLibrary implements Initializable{
     @FXML
     private Button saveChangesButton;
 
-    private Main main;
+    private Main mainApp;
 
     public MyMoviesLibrary() {
     }
 
-    public void setMainApp(Main main) {
-        this.main = main;
+    public void setMainApp(Main mainApp) {
+        this.mainApp = mainApp;
 
-        movieTableView.setItems(main.getMovies());
+        movieTableView.setItems(mainApp.getController().getModel().getMovies());
     }
 
     @Override
@@ -80,17 +80,15 @@ public class MyMoviesLibrary implements Initializable{
 
 
         addMovieButton.setOnMouseClicked(event -> {
-            main.getMovies().add(new Movie());
+            mainApp.getController().addMovie();
         });
 
         deleteMovieButton.setOnMouseClicked(event -> {
-            main.getMovies().remove(movieTableView.getSelectionModel().getSelectedIndex());
+            mainApp.getController().removeMovie(movieTableView.getSelectionModel().getSelectedIndex());
         });
 
         saveChangesButton.setOnMouseClicked(event -> {
-            main.saveMoviesData();
+            mainApp.getController().saveMoviesData();
         });
-
-
     }
 }
